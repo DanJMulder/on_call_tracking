@@ -45,8 +45,8 @@ def call_shifts_this_month(this_year, this_month, shift_day):
   new_shifts = pd.DataFrame([{'Date':new_shift}])
   return pd.concat([my_shifts, new_shifts])
 
+#this needs to be developed into something interactive
 updated_shifts = call_shifts_this_month(2022, 6, 1)
-
 updated_shifts.to_csv('new_on_call_shifts.csv')
 
 # create a new column with just month number
@@ -67,8 +67,8 @@ def monthly_coverage(month):
   print('1 in', "{:.2f}".format(monthly_coverage), 'coverage for', month_name)
   print(coverage_conclusion)
 
+# list the coverage rates and enough/not enough conclusion for each month
 monthly_coverage(4)
 monthly_coverage(5)
 monthly_coverage(6)
-
 
