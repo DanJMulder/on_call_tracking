@@ -45,11 +45,12 @@ def call_shifts_this_month(this_year, this_month, shift_day):
   new_shifts = pd.DataFrame([{'Date':new_shift}])
   return pd.concat([my_shifts, new_shifts])
 
-#this needs to be developed into something interactive
-updated_shifts = call_shifts_this_month(2022, 6, 1)
-updated_shifts.to_csv('new_on_call_shifts.csv')
+# DEVELOP INTO INTERACTIVE ADDITION OF SHIFTS AND THE ABILITY TO ADD A LITS OF SHIFTS AS THE THIRD ARGUMENT
+# updated_shifts = call_shifts_this_month(2022, 7, 1)
+# updated_shifts.to_csv('new_on_call_shifts.csv')
 
 # create a new column with just month number
+updated_shifts = my_shifts
 updated_shifts['Month'] = pd.DatetimeIndex(updated_shifts['Date']).month
 
 # print call rate by month
@@ -67,8 +68,29 @@ def monthly_coverage(month):
   print('1 in', "{:.2f}".format(monthly_coverage), 'coverage for', month_name)
   print(coverage_conclusion)
 
+# print call rate for year to date (ytd) from beginning of on call structure Apr 1, 2022
+def ytd_coverage(month):
+  months_since_april_first = month - 3
+  months_since_april_first_list = list(range(months_since_april_first, (month+1)))
+  # make a list counting numbers from april to now, ie: [4, 5, 6, 7]
+  ytd_day_count = 0
+  for i in (months_since_april_first_list):
+    ytd_day_count = ytd_day_count + days_this_month(2022, i)
+  shift_count = len(updated_shifts['Date'])
+  ytd_coverage = ytd_day_count/shift_count
+  if ytd_coverage > 4.0:
+    coverage_conclusion = "NOT ENOUGH"
+  else:
+    coverage_conclusion = "enough"
+  month_num = str(month)
+  datetime_object = datetime.datetime.strptime(month_num, "%m")
+  month_name = full_month_name = datetime_object.strftime("%B")
+  print('1 in', "{:.2f}".format(ytd_coverage), 'year to date coverage from April until', month_name)
+  print(coverage_conclusion)
+
 # list the coverage rates and enough/not enough conclusion for each month
 monthly_coverage(4)
 monthly_coverage(5)
 monthly_coverage(6)
-
+monthly_coverage(7)
+ytd_coverage(7)
