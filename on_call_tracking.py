@@ -16,7 +16,7 @@ import datetime
 from dateutil import parser
 
 # load the shift list
-os.chdir('/Users/danielmulder/Documents/GitHub/on_call_tracking')
+os.chdir('/on_call_tracking')
 my_shifts = pd.read_csv('on_call_shifts.csv')
 my_shifts.Date = my_shifts.Date.astype(str)
 print(my_shifts)
